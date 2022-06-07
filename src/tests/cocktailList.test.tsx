@@ -1,11 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { CocktailList } from "../components/cocktailList";
 import userEvent from "@testing-library/user-event";
 import { server } from "./mocks/server";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { rest } from "msw";
+import { CocktailList } from "../components/cocktailList";
+import { CocktailsProvider } from "../context/cocktailProvider";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -14,9 +15,11 @@ afterAll(() => server.close());
 test("given drinks data, renders output to screen", async () => {
   const history = createMemoryHistory();
   render(
-    <Router location={history.location} navigator={history}>
-      <CocktailList url="https://www.thecocktaildb.com/api/json/v1/1/search.php?" />
-    </Router>
+    <CocktailsProvider>
+      <Router location={history.location} navigator={history}>
+        <CocktailList />
+      </Router>
+    </CocktailsProvider>
   );
   const queryInput = screen.getByRole("textbox", { name: /cocktail name/i });
   userEvent.type(queryInput, "test");
@@ -40,7 +43,9 @@ test("given no drinks data, render a message", async () => {
     )
   );
   render(
-    <CocktailList url="https://www.thecocktaildb.com/api/json/v1/1/search.php?" />
+    <CocktailsProvider>
+      <CocktailList />
+    </CocktailsProvider>
   );
   const queryInput = screen.getByRole("textbox", { name: /cocktail name/i });
   userEvent.type(queryInput, "test");
@@ -60,7 +65,9 @@ test("given an inaccesible api return a message", async () => {
     )
   );
   render(
-    <CocktailList url="https://www.thecocktaildb.com/api/json/v1/1/search.php?" />
+    <CocktailsProvider>
+      <CocktailList />
+    </CocktailsProvider>
   );
   const queryInput = screen.getByRole("textbox", { name: /cocktail name/i });
   userEvent.type(queryInput, "test");

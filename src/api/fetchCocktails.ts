@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "react";
-import { ActionType } from "../components/cocktailList";
+import { ActionType } from "../interfaces";
 
 export const fetchCocktails = async (
   url: string,

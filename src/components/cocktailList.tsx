@@ -1,49 +1,20 @@
 import React, {
   ChangeEvent,
-  Reducer,
+  useContext,
   useEffect,
-  useReducer,
   useRef,
   useState,
 } from "react";
 import { Link } from "react-router-dom";
 import { fetchCocktails } from "../api/fetchCocktails";
-export interface Cocktail {
-  idDrink: string;
-  strDrink: string;
-  strCategory: string;
-  strGlass: string;
-  strInstructions: string;
-  strDrinkThumb: string;
-  strIngredient1: string;
-  strMeasure1: string;
-}
-export type ActionType =
-  | { type: "setCocktails"; payload: Cocktail[] }
-  | { type: "setError"; payload: string };
+import { CocktailContext } from "../context/cocktailProvider";
 
-type StateType = {
-  arrC: Cocktail[];
-  err: string;
-};
-const cocktailsInitialState: StateType = { arrC: [], err: "" };
+export const CocktailList = () => {
+  const {
+    state: { arrC, err },
+    dispatch,
+  } = useContext(CocktailContext);
 
-const cocktailReducer: Reducer<StateType, ActionType> = (state, action) => {
-  switch (action.type) {
-    case "setCocktails":
-      return { ...state, arrC: action.payload, err: "" };
-    case "setError":
-      return { ...state, err: action.payload, arrC: [] };
-    default:
-      return state;
-  }
-};
-
-export const CocktailList = ({ url }: { url: string }) => {
-  const [{ arrC, err }, dispatch] = useReducer(
-    cocktailReducer,
-    cocktailsInitialState
-  );
   const ref = useRef<NodeJS.Timeout>();
   const [query, setQuery] = useState("");
 
@@ -58,9 +29,12 @@ export const CocktailList = ({ url }: { url: string }) => {
       clearTimeout(ref.current);
     }
     ref.current = setTimeout(() => {
-      fetchCocktails(`${url}${query}`, dispatch);
+      fetchCocktails(
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`,
+        dispatch
+      );
     }, 500);
-  }, [query, url, dispatch]);
+  }, [query, dispatch]);
 
   return (
     <>
