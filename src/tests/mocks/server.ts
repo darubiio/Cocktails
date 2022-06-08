@@ -9,7 +9,7 @@ export const server = setupServer(
         ctx.json({
           drinks: [
             {
-              idDrink: 1,
+              idDrink: "1542",
               strDrinkThumb: "./images/thumbs-down.svg",
               strDrink: "test drink",
               strInstructions: "test instructions",

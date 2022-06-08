@@ -4,7 +4,7 @@ import { Cocktail } from "../interfaces";
 
 export const Cocktails = ({ arrC }: { arrC: Cocktail[] }) => {
   return (
-    <div>
+    <>
       {arrC && (
         <div id="cocktail list">
           {arrC.map((cocktail) => (
@@ -14,6 +14,6 @@ export const Cocktails = ({ arrC }: { arrC: Cocktail[] }) => {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };
