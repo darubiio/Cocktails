@@ -15,7 +15,9 @@ import { Loading } from "./loading";
 export const CocktailList = () => {
   const {
     state: { arrC, err, loading },
-    dispatch,
+    setCocktail,
+    setError,
+    setLoading,
   } = useContext(CocktailContext);
 
   const ref = useRef<NodeJS.Timeout>();
@@ -30,15 +32,16 @@ export const CocktailList = () => {
   useEffect(() => {
     if (ref.current) {
       clearTimeout(ref.current);
-      dispatch({ type: "setLoading" });
+      setLoading();
     }
     ref.current = setTimeout(() => {
       fetchCocktails(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`,
-        dispatch
+        setCocktail,
+        setError
       );
     }, 300);
-  }, [query, dispatch]);
+  }, [query, setCocktail, setError, setLoading]);
 
   return (
     <>

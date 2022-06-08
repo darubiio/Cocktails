@@ -24,5 +24,8 @@ export type StateType = {
 
 export type ContextType = {
   state: StateType;
-  dispatch: Dispatch<ActionType>;
+  // dispatch: Dispatch<ActionType>;
+  setCocktail: (cocktails: Cocktail[]) => void;
+  setError: (error: string) => void;
+  setLoading: () => void;
 };

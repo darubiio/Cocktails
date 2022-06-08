@@ -1,23 +1,20 @@
 import axios from "axios";
-import { Dispatch } from "react";
-import { ActionType } from "../interfaces";
+import { Cocktail } from "../interfaces";
 
 export const fetchCocktails = async (
   url: string,
-  dispatch: Dispatch<ActionType>
+  setCocktail: (cocktail: Cocktail[]) => void,
+  setError: (error: string) => void
 ) => {
   await axios
     .get(url)
     .then((res) => {
       const { drinks } = res.data;
       return drinks
-        ? dispatch({ type: "setCocktails", payload: res.data.drinks })
-        : dispatch({
-            type: "setError",
-            payload: "We couldn't find cocktails with the given name",
-          });
+        ? setCocktail(res.data.drinks)
+        : setError("We couldn't find cocktails with the given name");
     })
     .catch((error) => {
-      dispatch({ type: "setError", payload: "Server error" });
+      setError("Server Error");
     });
 };
