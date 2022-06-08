@@ -7,9 +7,11 @@ export const cocktailReducer: Reducer<StateType, ActionType> = (
 ) => {
   switch (action.type) {
     case "setCocktails":
-      return { ...state, arrC: action.payload, err: "" };
+      return { ...state, arrC: action.payload, err: "", loading: false };
     case "setError":
-      return { ...state, err: action.payload, arrC: [] };
+      return { ...state, err: action.payload, arrC: [], loading: false };
+    case "setLoading":
+      return { ...state, loading: true, err: "", arrC: [] };
     default:
       return state;
   }

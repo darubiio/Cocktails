@@ -13,11 +13,13 @@ export interface Cocktail {
 
 export type ActionType =
   | { type: "setCocktails"; payload: Cocktail[] }
-  | { type: "setError"; payload: string };
+  | { type: "setError"; payload: string }
+  | { type: "setLoading" };
 
 export type StateType = {
   arrC: Cocktail[];
   err: string;
+  loading: boolean;
 };
 
 export type ContextType = {

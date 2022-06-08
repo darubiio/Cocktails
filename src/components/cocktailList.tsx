@@ -13,7 +13,7 @@ import { Input } from "./input";
 
 export const CocktailList = () => {
   const {
-    state: { arrC, err },
+    state: { arrC, err, loading },
     dispatch,
   } = useContext(CocktailContext);
 
@@ -29,6 +29,7 @@ export const CocktailList = () => {
   useEffect(() => {
     if (ref.current) {
       clearTimeout(ref.current);
+      dispatch({ type: "setLoading" });
     }
     ref.current = setTimeout(() => {
       fetchCocktails(
@@ -47,6 +48,7 @@ export const CocktailList = () => {
         aria-label="Cocktail name"
         onChange={handleChange}
       />
+      {loading && <p>Loading...</p>}
       <Cocktails arrC={arrC} />
       <ErrorM err={err} />
     </>

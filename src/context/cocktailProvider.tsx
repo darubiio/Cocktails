@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import { ContextType, StateType } from "../interfaces";
 import { cocktailReducer } from "./cocktailReducer";
 
-const cocktailsInitialState: StateType = { arrC: [], err: "" };
+const cocktailsInitialState: StateType = { arrC: [], err: "", loading: true };
 export const CocktailContext = createContext<ContextType>({
   state: cocktailsInitialState,
   dispatch: () => null,
