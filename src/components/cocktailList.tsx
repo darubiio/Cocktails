@@ -5,9 +5,11 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
 import { fetchCocktails } from "../api/fetchCocktails";
 import { CocktailContext } from "../context/cocktailProvider";
+import { Cocktails } from "./cocktails";
+import { ErrorM } from "./error";
+import { Input } from "./input";
 
 export const CocktailList = () => {
   const {
@@ -33,29 +35,20 @@ export const CocktailList = () => {
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`,
         dispatch
       );
-    }, 500);
+    }, 400);
   }, [query, dispatch]);
 
   return (
     <>
-      <input
+      <Input
         type="text"
         placeholder="Cocktail name"
         value={query}
         aria-label="Cocktail name"
         onChange={handleChange}
       />
-
-      {arrC && (
-        <div id="cocktail list">
-          {arrC.map((cocktail) => (
-            <li key={cocktail.idDrink}>
-              <Link to={`/${cocktail.idDrink}`}>{cocktail.strDrink}</Link>
-            </li>
-          ))}
-        </div>
-      )}
-      {err && <p role="alert">{err}</p>}
+      <Cocktails arrC={arrC} />
+      <ErrorM err={err} />
     </>
   );
 };
