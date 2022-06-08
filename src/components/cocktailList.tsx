@@ -10,6 +10,7 @@ import { CocktailContext } from "../context/cocktailProvider";
 import { Cocktails } from "./cocktails";
 import { ErrorM } from "./error";
 import { Input } from "./input";
+import { Loading } from "./loading";
 
 export const CocktailList = () => {
   const {
@@ -36,7 +37,7 @@ export const CocktailList = () => {
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`,
         dispatch
       );
-    }, 400);
+    }, 300);
   }, [query, dispatch]);
 
   return (
@@ -48,7 +49,7 @@ export const CocktailList = () => {
         aria-label="Cocktail name"
         onChange={handleChange}
       />
-      {loading && <p>Loading...</p>}
+      <Loading loading={loading} />
       <Cocktails arrC={arrC} />
       <ErrorM err={err} />
     </>

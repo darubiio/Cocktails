@@ -1,12 +1,7 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { CocktailContext } from "../context/cocktailProvider";
-import { Cocktail } from "../interfaces";
-
-type Preparation = {
-  ingredient: string;
-  measure: string;
-};
+import { usePreparation } from "./hook/usePreparation";
 
 export const CocktailDetail = () => {
   let { id } = useParams();
@@ -15,15 +10,8 @@ export const CocktailDetail = () => {
   } = useContext(CocktailContext);
 
   const cocktail = arrC.find((cocktl) => cocktl.idDrink === id);
+  const preparation = usePreparation(cocktail);
 
-  let preparation: Preparation[] = [];
-  for (let i = 0; i <= 15; i++) {
-    if (cocktail && cocktail[("strIngredient" + i) as keyof Cocktail]) {
-      const ingredient = cocktail[("strIngredient" + i) as keyof Cocktail];
-      const measure = cocktail[("strMeasure" + i) as keyof Cocktail];
-      preparation = [...preparation, { ingredient, measure }];
-    }
-  }
   return (
     <div>
       <h3>{cocktail?.strDrink}</h3>
