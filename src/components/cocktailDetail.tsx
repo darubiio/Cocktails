@@ -17,7 +17,9 @@ export const CocktailDetail = () => {
       <h3>{cocktail?.strDrink}</h3>
       {preparation.map((el) => (
         <div key={el.measure + el.ingredient}>
-          <span>{`${el.ingredient} (${el.measure})`}</span>
+          <span>
+            {el.ingredient} {el.measure ? `(${el.measure})` : ""}
+          </span>
         </div>
       ))}
       <p>{cocktail?.strInstructions}</p>

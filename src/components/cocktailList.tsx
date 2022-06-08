@@ -43,7 +43,6 @@ export const CocktailList = () => {
   return (
     <>
       <Input
-        type="text"
         placeholder="Cocktail name"
         value={query}
         aria-label="Cocktail name"
