@@ -1,3 +1,4 @@
+import App from "../App";
 import { server } from "./mocks/server";
 import { rest } from "msw";
 import { createMemoryHistory } from "history";
@@ -6,7 +7,10 @@ import { CocktailsProvider } from "../context/cocktailProvider";
 import { CocktailList } from "../components/cocktailList";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter, Router } from "react-router-dom";
-import App from "../App";
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("given an inaccesible api return a message", async () => {
   server.use(
